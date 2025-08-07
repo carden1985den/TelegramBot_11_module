@@ -24,14 +24,13 @@ namespace TelegramBot_11_module.Controllers
 
         public async Task Handle(Message message, CancellationToken ct)
         {
-
             switch (message.Text) 
             {
                 case "/start":
                     var keyboardButton = new List<InlineKeyboardButton[]>();
                     keyboardButton.Add(new[] { 
-                        InlineKeyboardButton.WithCallbackData("Подсчёт символов в строке", "symbolCount"), 
-                        InlineKeyboardButton.WithCallbackData("Подсчёт суммы чисел", "symbolSum")
+                        InlineKeyboardButton.WithCallbackData("Подсчёт символов в строке", "count"), 
+                        InlineKeyboardButton.WithCallbackData("Подсчёт суммы чисел", "sum")
                     });
 
                     await _telegramBotClient.SendMessage(
@@ -42,10 +41,16 @@ namespace TelegramBot_11_module.Controllers
                         replyMarkup: new InlineKeyboardMarkup(keyboardButton)
                     );
                     break;
+                case "/count":
+                    _memoryStorage.Action = message.Text.Substring(1);
+                    break;
+                case "/sum":
+                    _memoryStorage.Action = message.Text.Substring(1);
+                    break;
                 default:
                     switch (_memoryStorage.Action) 
                     {
-                        case "symbolCount":
+                        case "count":
                             
                             int strLength = ProcessString.GetLength(message.Text);
                             
@@ -57,7 +62,7 @@ namespace TelegramBot_11_module.Controllers
 
                             await _telegramBotClient.SendMessage(message.Chat.Id, $"Не удалось подсчитать символы", cancellationToken: ct);
                             break;
-                        case "symbolSum":
+                        case "sum":
                             
                             int strSum = ProcessString.GetSum(message.Text);
 

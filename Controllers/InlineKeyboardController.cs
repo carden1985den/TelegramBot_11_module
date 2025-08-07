@@ -23,7 +23,7 @@ namespace TelegramBot_11_module.Controllers
 
         public async Task Handle(CallbackQuery? callbackQuery, CancellationToken ct)
         {
-            Console.WriteLine($"Нажата конпка {callbackQuery.Data}");
+            //Console.WriteLine($"Нажата конпка {callbackQuery.Data}");
             //await _telegramBotClient.SendMessage(callbackQuery.From.Id, $"Обнаружено нажатие на кнопку {callbackQuery.Data}", cancellationToken: ct);
             //Сохраняем в переменную ТО действие, которое необходимо выполнить над строкой
             _memoryStorage.Action = callbackQuery.Data;
